@@ -8,7 +8,8 @@ Comandos y payloads listos para copiar. Organizados con los mismos ejes que el r
 
 | Cheatsheet | Contenido |
 |---|---|
-| [recon](por-fase/recon.md) | Subdominios, hosts vivos, puertos, fingerprinting, dirbusting, dorks |
+| [01-recon](por-fase/01-recon.md) | Subdominios, hosts vivos, puertos, fingerprinting, dirbusting, dorks |
+| [02-enumeration](por-fase/02-enumeration.md) | Crawling, content discovery, parámetros, análisis JS, APIs, vhosts |
 
 ### `por-vuln/` — payloads por tipo de bug (espejan `01-web/`)
 
