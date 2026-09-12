@@ -10,6 +10,8 @@ Comandos y payloads listos para copiar. Organizados con los mismos ejes que el r
 |---|---|
 | [01-recon](por-fase/01-recon.md) | Subdominios, hosts vivos, puertos, fingerprinting, dirbusting, dorks |
 | [02-enumeration](por-fase/02-enumeration.md) | Crawling, content discovery, parámetros, análisis JS, APIs, vhosts |
+| [03-explotacion](por-fase/03-explotacion.md) | Utilidades genéricas: listeners, msfvenom, servir/descargar ficheros, encoding |
+| [04-post-explotacion](por-fase/04-post-explotacion.md) | Situational awareness Linux/Windows, enum de privesc, búsqueda de loot, limpieza |
 
 ### `por-vuln/` — payloads por tipo de bug (espejan `01-web/`)
 

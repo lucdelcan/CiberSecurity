@@ -18,8 +18,8 @@ En un pentest web tú ejecutas con **WSTG** y, si el cliente lo pide, mides el n
   - `INFO` Information Gathering (recon) — **esta fase**
   - `CONF` Configuration & Deployment Management
   - `IDNT` Identity Management
-  - `ATHN` Authentication
-  - `ATHZ` Authorization
+  - `AUTHN` Authentication
+  - `AUTHZ` Authorization
   - `SESS` Session Management
   - `INPV` Input Validation (inyecciones, XSS…)
   - `ERR`  Error Handling
