@@ -10,6 +10,9 @@ Fallos en el diseño o implementación de la autenticación que permiten suplant
 
 ## Vectores frecuentes
 
+> Fichas a fondo: **[JWT](jwt.md)** · **[OAuth / SSO](oauth.md)** · fuerza bruta en **[brute-force.md](brute-force.md)**.
+
+
 - **Bypass del esquema:** acceso directo a rutas protegidas, forzado de parámetros (`admin=true`), respuestas manipulables.
 - **Credenciales por defecto** y contraseñas débiles.
 - **Reset de contraseña inseguro:** tokens predecibles, sin caducidad, host header injection en el enlace, respuesta que filtra el token.

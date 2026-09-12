@@ -1,41 +1,44 @@
-# Deserialización insegura
+# Deserialización insegura — Índice
 
-- **WSTG:** relacionado con `WSTG-INPV` (input validation)
+- **WSTG:** relacionado con `WSTG-INPV`
 - **OWASP Top 10:** `A08:2021 – Software and Data Integrity Failures`
 - **Alias:** insecure deserialization, object injection
 
 ## Qué es
 
-La aplicación deserializa datos controlados por el usuario sin validar su integridad. Manipulando el objeto serializado, el atacante puede alterar la lógica o, mediante "gadget chains", llegar a ejecución de código.
+La app deserializa datos controlados por el usuario sin validar integridad. Manipulando el objeto, el atacante altera la lógica o, con "gadget chains" en las librerías presentes, llega a RCE.
 
-## Cómo detectarla
+## Detección (común)
 
-- Identifica datos serializados: cookies/parámetros en base64 que empiezan por patrones conocidos (PHP `O:`, Java `rO0`, .NET, Python pickle).
-- Modifica campos del objeto y observa cambios de comportamiento.
-- Herramientas: ysoserial (Java), ysoserial.net, phpggc (PHP).
+Identifica blobs serializados por su formato:
 
-## Cómo explotarla
+| Lenguaje | Pista |
+|---|---|
+| PHP | empieza por `O:` , `a:` (serialize) |
+| Java | base64 que empieza por `rO0` (`AC ED 00 05` en hex) |
+| Python (pickle) | opcodes; a menudo base64 |
+| .NET | `AAEAAAD/////` (BinaryFormatter) |
 
-1. Reconoce el formato y el lenguaje.
-2. Manipula atributos para escalar privilegios/alterar lógica.
-3. Con una gadget chain disponible en las librerías del target, genera un payload que ejecute comandos (RCE).
+## Fichas por lenguaje
+
+| Lenguaje | Ficha |
+|---|---|
+| PHP | [php.md](php.md) |
+| Java | [java.md](java.md) |
+| Python (pickle) | [python.md](python.md) |
 
 ## Impacto
 
-Desde manipulación de lógica y escalada hasta RCE (crítico), según las gadget chains disponibles.
+Desde manipulación de lógica/escalada hasta RCE (crítico), según las gadget chains disponibles.
 
-## Cómo remediar
+## Remediación (común)
 
-- No deserializar datos no confiables; preferir formatos de solo datos (JSON) con parsers seguros.
+- No deserializar datos no confiables; preferir formatos de solo datos (JSON).
 - Firmar/verificar integridad de los objetos serializados.
-- Listas blancas de clases permitidas en la deserialización.
-
-## Referencias
-
-- OWASP — Insecure Deserialization · CWE-502
-- PortSwigger — Insecure deserialization
+- Listas blancas de clases permitidas.
 
 ## Enlaces internos
 
 - Checklist: `../../00-metodologia/06-checklists/07-input-validation.md`
-- Redacción para informe: `../../00-metodologia/05-informe/catalogo-redacciones.md`
+- Redacción: `../../00-metodologia/05-informe/catalogo-redacciones.md`
+- Referencias: CWE-502 · PortSwigger — Insecure deserialization

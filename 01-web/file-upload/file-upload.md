@@ -1,4 +1,4 @@
-# File Upload Attacks
+# File Upload Attacks — Índice
 
 - **WSTG:** `WSTG-BUSL-08` (tipos inesperados), `WSTG-BUSL-09` (ficheros maliciosos)
 - **OWASP Top 10:** `A04:2021 – Insecure Design` / `A03:2021 – Injection`
@@ -6,39 +6,34 @@
 
 ## Qué es
 
-La aplicación permite subir ficheros sin validar correctamente tipo, contenido o ubicación. El atacante sube un fichero malicioso (típicamente una webshell) y, si consigue ejecutarlo, obtiene RCE.
+La app permite subir ficheros sin validar bien tipo, contenido o ubicación. El atacante sube un fichero malicioso (típicamente webshell) y, si consigue ejecutarlo, obtiene RCE.
 
-## Cómo detectarla
+## Método base
 
-- Localiza toda funcionalidad de subida (avatar, adjuntos, importaciones).
-- Prueba extensiones ejecutables según el stack (`.php`, `.phtml`, `.asp`, `.aspx`, `.jsp`).
-- Comprueba qué validan: extensión, `Content-Type`, magic bytes, y **dónde** cae el fichero (¿ruta accesible por web?).
+1. Localiza toda subida (avatar, adjuntos, importaciones).
+2. Comprueba qué valida: extensión, `Content-Type`, magic bytes, y **dónde** cae el fichero (¿ruta accesible/ejecutable por web?).
+3. Sube y accede a la URL del fichero.
 
-## Cómo explotarla
+## Fichas a fondo
 
-- **Bypass de extensión:** dobles extensiones (`shell.php.jpg`), mayúsculas, extensiones alternativas, null byte (legacy).
-- **Bypass de Content-Type:** cambiar la cabecera a `image/png`.
-- **Bypass de magic bytes:** anteponer cabecera de imagen válida al payload.
-- **Ejecución:** acceder a la URL del fichero subido; si el directorio ejecuta código → webshell → reverse shell.
-- Otros: SVG con XSS/XXE, ficheros que sobreescriben rutas (path traversal en el nombre).
+| Tema | Ficha |
+|---|---|
+| Bypass de validaciones | [bypass.md](bypass.md) |
+| De subida a RCE y otras variantes | [to-rce.md](to-rce.md) |
 
 ## Impacto
 
-Ejecución remota de código y compromiso del servidor (crítico) cuando la webshell es ejecutable; XSS/XXE almacenado o DoS en otros casos.
+RCE y compromiso del servidor (crítico) si la webshell es ejecutable; XSS/XXE almacenado o DoS en otros casos.
 
-## Cómo remediar
+## Remediación (común)
 
-- Lista blanca de extensiones y validación de contenido real (magic bytes).
-- Renombrar el fichero y guardarlo **fuera del webroot** o en almacenamiento que no ejecute código.
-- Servir descargas con `Content-Disposition` y sin permisos de ejecución.
-- Límite de tamaño y análisis antimalware.
-
-## Referencias
-
-- OWASP WSTG `WSTG-BUSL-09` · CWE-434
-- OWASP File Upload Cheat Sheet
+- Lista blanca de extensiones + validación de contenido real (magic bytes).
+- Renombrar y guardar **fuera del webroot** o en almacenamiento sin ejecución.
+- Servir con `Content-Disposition`, sin permisos de ejecución; límite de tamaño y antimalware.
 
 ## Enlaces internos
 
+- Payloads: `../../04-cheatsheets/por-vuln/file-upload.md`
 - Checklist: `../../00-metodologia/06-checklists/10-business-logic.md`
-- Redacción para informe: `../../00-metodologia/05-informe/catalogo-redacciones.md`
+- Redacción: `../../00-metodologia/05-informe/catalogo-redacciones.md`
+- Referencias: `WSTG-BUSL-09` · CWE-434 · OWASP File Upload Cheat Sheet

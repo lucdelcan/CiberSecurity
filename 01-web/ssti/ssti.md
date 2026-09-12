@@ -1,4 +1,4 @@
-# Server-Side Template Injection (SSTI)
+# Server-Side Template Injection (SSTI) — Índice
 
 - **WSTG:** `WSTG-INPV-18`
 - **OWASP Top 10:** `A03:2021 – Injection`
@@ -6,36 +6,37 @@
 
 ## Qué es
 
-La aplicación inserta entrada del usuario directamente en una plantilla del lado servidor (Jinja2, Twig, Freemarker, Velocity...) que luego se renderiza. El atacante inyecta sintaxis del motor de plantillas, que se evalúa en el servidor, llegando con frecuencia a RCE.
+La app inserta entrada del usuario en una plantilla de servidor que luego se renderiza. El atacante inyecta sintaxis del motor, que se evalúa en el servidor → con frecuencia RCE.
 
-## Cómo detectarla
+## Detección (común)
 
-- Inyecta una operación matemática en la sintaxis del motor: `${7*7}`, `{{7*7}}`, `#{7*7}`, `<%= 7*7 %>`.
-- Si la respuesta devuelve `49`, hay evaluación server-side.
-- Usa un árbol de decisión de payloads para identificar el motor concreto según qué sintaxis evalúa.
+Inyecta operaciones y mira si se evalúan:
+```
+${7*7}  {{7*7}}  <%= 7*7 %>  #{7*7}  ${{7*7}}  *{7*7}
+```
+Si devuelve `49`, hay evaluación server-side. Identifica el motor según qué sintaxis funciona y cuál da error.
 
-## Cómo explotarla
+## Fichas por motor
 
-1. **Identifica el motor** (qué sintaxis evalúa y cuál da error).
-2. Escala del "cálculo" a **acceso a objetos/clases** del lenguaje para llegar a ejecución de comandos (p. ej. en Jinja2, cadenas de `__class__`/`__subclasses__`).
-3. Ejecuta comando inocuo para demostrar RCE.
+| Motor | Ficha |
+|---|---|
+| Jinja2 / Flask (Python) | [jinja2.md](jinja2.md) |
+| Twig (PHP) | [twig.md](twig.md) |
+| Freemarker (Java) | [freemarker.md](freemarker.md) |
 
 ## Impacto
 
-Habitualmente ejecución remota de código en el servidor → compromiso total. Crítico.
+Habitualmente RCE en el servidor → compromiso total. Crítico.
 
-## Cómo remediar
+## Remediación (común)
 
-- No pasar entrada del usuario como parte de la plantilla; usarla solo como **datos** (contexto), nunca como fuente de la plantilla.
-- Motores en modo sandbox (con cautela, se han saltado).
-- Lista blanca/escape de la entrada; lógica de plantilla mínima.
-
-## Referencias
-
-- OWASP WSTG `WSTG-INPV-18` · CWE-1336
-- PortSwigger — Server-side template injection
+- No pasar entrada del usuario como parte de la plantilla; usarla solo como **datos** (contexto).
+- Sandbox del motor (con cautela) y lógica de plantilla mínima.
+- Lista blanca/escape de la entrada.
 
 ## Enlaces internos
 
+- Payloads: `../../04-cheatsheets/por-vuln/ssti.md`
 - Checklist: `../../00-metodologia/06-checklists/07-input-validation.md`
-- Redacción para informe: `../../00-metodologia/05-informe/catalogo-redacciones.md`
+- Redacción: `../../00-metodologia/05-informe/catalogo-redacciones.md`
+- Referencias: `WSTG-INPV-18` · CWE-1336 · PortSwigger — SSTI
