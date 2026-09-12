@@ -1,0 +1,18 @@
+# Writeups de máquinas ACTIVAS de HTB (no publicar hasta que se retiren)
+# Descomenta si el repo es público:
+# 05-writeups/htb/
+
+# Wordlists / diccionarios pesados
+*.txt.gz
+wordlists/*.txt
+
+# Credenciales y datos sensibles de engagements reales
+*.env
+*credenciales*
+*clientes*
+loot/
+scope/
+
+# Sistema
+.DS_Store
+Thumbs.db
