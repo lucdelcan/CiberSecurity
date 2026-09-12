@@ -17,7 +17,19 @@ Comandos y payloads listos para copiar. Organizados con los mismos ejes que el r
 
 | Cheatsheet | Contenido |
 |---|---|
-| _(pendiente)_ | sqli, xss, ssrf... |
+| [sqli](por-vuln/sqli.md) | Detección, comentarios, auth bypass, union, error, blind (boolean/time), sqlmap |
+| [xss](por-vuln/xss.md) | Prueba por contexto, evasión de filtros, DOM sinks, robo de cookie |
+| [command-injection](por-vuln/command-injection.md) | Operadores, OOB/blind, evasión, reverse shell |
+| [ssrf](por-vuln/ssrf.md) | Destinos internos, metadata cloud, bypass de filtros, OOB |
+| [ssti](por-vuln/ssti.md) | Detección polyglot, RCE por motor (Jinja2, Twig, Freemarker) |
+| [xxe](por-vuln/xxe.md) | Lectura de ficheros, SSRF, blind OOB, wrappers PHP |
+| [file-inclusion](por-vuln/file-inclusion.md) | LFI/RFI, path traversal, bypass, LFI a RCE |
+| [idor](por-vuln/idor.md) | Qué manipular, técnica con 2 cuentas, enumeración |
+| [csrf](por-vuln/csrf.md) | PoC formulario/fetch, bypass de token |
+| [file-upload](por-vuln/file-upload.md) | Webshell, bypass de extensión/Content-Type/magic bytes |
+| [ldap](por-vuln/ldap.md) | Detección, auth bypass, extracción ciega |
+| [xpath](por-vuln/xpath.md) | Detección, auth bypass, extracción ciega |
+| [graphql](por-vuln/graphql.md) | Introspección, enumeración, BOLA, batching |
 
 ### `transversal/` — no cuelgan de una fase ni de una vuln
 

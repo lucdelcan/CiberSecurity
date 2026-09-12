@@ -1,6 +1,6 @@
-# Writeups de máquinas ACTIVAS de HTB (no publicar hasta que se retiren)
-# Descomenta si el repo es público:
-# 05-writeups/htb/
+# Writeups de máquinas activas / contenido con licencia de terceros
+# (no publicar). Descomenta y ajusta si el repo es público:
+# 05-writeups/privados/
 
 # Wordlists / diccionarios pesados
 *.txt.gz
