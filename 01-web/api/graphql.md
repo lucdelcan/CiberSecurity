@@ -1,4 +1,4 @@
-# GraphQL Attacks
+# GraphQL Attacks — Índice
 
 - **WSTG:** `WSTG-APIT-01`
 - **OWASP:** OWASP API Security Top 10
@@ -6,39 +6,36 @@
 
 ## Qué es
 
-GraphQL expone un único endpoint donde el cliente define la consulta. Una mala configuración permite descubrir todo el esquema, abusar de consultas anidadas o saltarse controles de acceso a nivel de objeto.
+GraphQL expone un único endpoint donde el cliente define la consulta. Una mala configuración permite descubrir todo el esquema, saltarse autorización a nivel de objeto o abusar de consultas para DoS/fuerza bruta.
 
-## Cómo detectarla
+## Localizar endpoint
 
-- Localiza el endpoint (`/graphql`, `/api/graphql`, `/v1/graphql`).
-- **Introspección:** lanza la introspection query; si responde, tienes todo el esquema (tipos, queries, mutations).
-- Herramientas: graphw00f (fingerprint), InQL, GraphQL Voyager (visualizar esquema).
+```
+/graphql  /api/graphql  /v1/graphql  /graphql/console  /graphiql
+```
+Fingerprint del motor con **graphw00f**.
 
-## Cómo explotarla
+## Fichas a fondo
 
-- **Introspección** → mapa completo de la API y sus operaciones.
-- **BOLA/IDOR:** acceder a objetos de otros por ID en queries/mutations sin autorización.
-- **Batching/aliases:** múltiples operaciones en una petición para saltarse rate limiting (p. ej. fuerza bruta).
-- **DoS:** consultas profundamente anidadas/circulares.
-- **Inyecciones** en resolvers que pasan argumentos a SQL/NoSQL/comandos.
+| Tema | Ficha |
+|---|---|
+| Introspección y descubrimiento del esquema | [introspection.md](introspection.md) |
+| Abuso de autorización y batching (BOLA, brute force, DoS) | [authz-batching.md](authz-batching.md) |
 
 ## Impacto
 
 Divulgación del esquema y datos, bypass de autorización, fuerza bruta y DoS.
 
-## Cómo remediar
+## Remediación (común)
 
 - Deshabilitar introspección en producción.
 - Autorización a nivel de objeto en cada resolver.
 - Límite de profundidad/complejidad y rate limiting que contemple aliases/batching.
-- Validación de entrada en los resolvers.
-
-## Referencias
-
-- OWASP WSTG `WSTG-APIT-01` · OWASP API Security Top 10
-- PortSwigger — GraphQL API vulnerabilities
+- Validación de entrada en resolvers (inyecciones dentro de argumentos).
 
 ## Enlaces internos
 
+- Payloads: `../../04-cheatsheets/por-vuln/graphql.md`
 - Checklist: `../../00-metodologia/06-checklists/12-api.md`
-- Redacción para informe: `../../00-metodologia/05-informe/catalogo-redacciones.md`
+- Redacción: `../../00-metodologia/05-informe/catalogo-redacciones.md`
+- Referencias: `WSTG-APIT-01` · OWASP API Security Top 10 · PortSwigger — GraphQL

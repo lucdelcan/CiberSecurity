@@ -1,40 +1,32 @@
-# Web Cache Attacks
+# Web Cache Attacks — Índice
 
 - **WSTG:** relacionado con `WSTG-CONF` / `WSTG-INPV-17` (Host header)
 - **OWASP Top 10:** `A05:2021 – Security Misconfiguration`
 - **Alias:** cache poisoning, cache deception
 
-## Qué es
+## Concepto clave: la clave de caché
 
-- **Cache poisoning:** el atacante consigue que la caché almacene una respuesta maliciosa (p. ej. vía cabeceras no incluidas en la clave de caché) que luego se sirve a otros usuarios.
-- **Cache deception:** engañar a la caché para que almacene contenido sensible de una víctima y luego recuperarlo.
+Una caché sirve una respuesta guardada a peticiones que considera "iguales" según su **cache key** (normalmente método + host + path + algunos parámetros). Todo lo que afecta la respuesta pero **no** entra en la clave ("unkeyed input") es la raíz de estos ataques.
 
-## Cómo detectarla
+## Fichas a fondo
 
-- Identifica cachés (cabeceras `X-Cache`, `Age`, CDN).
-- **Poisoning:** busca "unkeyed inputs" (cabeceras que afectan la respuesta pero no forman parte de la clave de caché) — p. ej. `X-Forwarded-Host`, `X-Forwarded-Scheme`.
-- **Deception:** prueba añadir extensiones estáticas a rutas dinámicas (`/perfil/foo.css`) y ver si se cachea contenido privado.
-
-## Cómo explotarla
-
-- Poisoning: inyecta un input no incluido en la clave que altere la respuesta (XSS reflejado, redirect) y consigue que se cachee para todos.
-- Deception: fuerza el cacheo de una página autenticada de la víctima y accede a la versión cacheada.
+| Tema | Ficha |
+|---|---|
+| Cache Poisoning | [poisoning.md](poisoning.md) |
+| Cache Deception | [deception.md](deception.md) |
 
 ## Impacto
 
-Distribución masiva de contenido malicioso (XSS a todos los usuarios), o robo de datos sensibles cacheados.
+Poisoning: distribuir contenido malicioso (XSS, redirect) a todos los usuarios. Deception: robar datos sensibles cacheados de una víctima.
 
-## Cómo remediar
+## Remediación (común)
 
-- Configurar bien la **clave de caché** (incluir todo input que afecte la respuesta).
-- No cachear contenido sensible/autenticado; cabeceras `Cache-Control` correctas.
-- Normalizar y validar cabeceras como `Host`/`X-Forwarded-*`.
-
-## Referencias
-
-- PortSwigger — Web cache poisoning / deception · CWE-524
+- Configurar bien la clave de caché (incluir todo input que afecte la respuesta).
+- No cachear contenido sensible/autenticado; `Cache-Control` correcto.
+- Normalizar/validar `Host` y `X-Forwarded-*`.
 
 ## Enlaces internos
 
 - Checklist: `../../00-metodologia/06-checklists/02-config-deploy.md`
-- Redacción para informe: `../../00-metodologia/05-informe/catalogo-redacciones.md`
+- Redacción: `../../00-metodologia/05-informe/catalogo-redacciones.md`
+- Referencias: CWE-524 · PortSwigger — Web cache poisoning / deception
