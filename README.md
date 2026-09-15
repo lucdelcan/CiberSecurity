@@ -41,4 +41,4 @@ Todo está enlazado para trabajar una vuln de principio a fin:
 
 ## Aviso legal
 
-Todo el contenido es para uso en **entornos autorizados** (engagements con permiso, laboratorios propios). Si el repo pasa a ser público, revisa que los writeups no incluyan máquinas activas ni material con licencia de terceros, y que no queden datos de clientes.
+Todo el contenido es para uso en **entornos autorizados** (engagements con permiso, laboratorios propios). 
