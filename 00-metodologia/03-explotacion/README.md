@@ -41,7 +41,7 @@ Un finding vale por lo que **significa para el negocio**, no por el payload:
 
 ---
 
-## 4. PoC segura en cliente real ⚠️
+## 4. PoC segura en cliente real
 
 Esto separa a un profesional de alguien que rompe producción:
 

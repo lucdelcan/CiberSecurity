@@ -13,7 +13,7 @@ Esto no es opcional y suele decidir la calidad del test:
 - **Confirmar el alcance (scope):** qué dominios, subdominios, IPs, apps y APIs están *in-scope* y, sobre todo, **qué está fuera**. Anotar wildcards (`*.cliente.com`) y entornos (prod vs pre).
 - **Ventanas y reglas:** horario permitido, si se puede hacer fuzzing agresivo, si hay WAF que no deben bloquearte (whitelisting de tu IP), a quién avisar si algo cae.
 - **Datos y límites:** qué no se puede tocar (datos reales de usuarios, borrados, pagos reales), y cómo reportar si encuentras datos sensibles.
-- **⭐ Pedir usuarios de prueba.** Si la app tiene autenticación, **pide credenciales de test para CADA rol** (admin, usuario normal, usuario de solo lectura, distintos tenants…). Esto es clave porque:
+- **Pedir usuarios de prueba.** Si la app tiene autenticación, **pide credenciales de test para CADA rol** (admin, usuario normal, usuario de solo lectura, distintos tenants…). Esto es clave porque:
   - Sin usuarios solo pruebas la parte pública → te pierdes la mayoría de la superficie.
   - Necesitas **≥2 usuarios del mismo rol** y usuarios de **distinto rol** para probar control de acceso (IDOR, escalada horizontal/vertical) más adelante en `03-explotacion` / `01-web/access-control`.
   - Idealmente cuentas que puedas "quemar" (registrar, modificar, romper) sin afectar a datos reales.
